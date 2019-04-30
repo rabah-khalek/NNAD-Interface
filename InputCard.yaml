@@ -1,8 +1,8 @@
 Seed: 1
-NNarchitecture: [2,5,3]
+NNarchitecture: [2,10,3]
 Derivatives: Analytic #Analytic #Automatic #Numeric 
 
-Datasets: [nCT_nPDF_800pts]
+Datasets: [nCT_nPDF]
 
 CT0_PDF: NNPDF31_nlo_as_0118
 max_sigma: 0.2 # percent relative uncertainty
@@ -10,4 +10,4 @@ min_sigma: 0.1 # percent relative uncertainty
 
 ForceT3toBeZero: on
 
-Iterations: 5000
+Iterations: 1000
