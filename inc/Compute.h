@@ -90,8 +90,9 @@ class Compute
 
     int GetNData();
     int GetNParameters();
-
-    std::vector<std::vector<double>> dDerivatives();
+    double Getreference_MSR();
+    
+        std::vector<std::vector<double>> dDerivatives();
 
     std::vector<std::pair<double, double>> PseudoData();
 

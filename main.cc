@@ -221,8 +221,9 @@ int main(int argc, char *argv[])
 
     double Ag;
     bool MSR = InputCard["MSR"].as<bool>();
+    double reference_MSR=compute.Getreference_MSR();
     if (MSR)
-      Ag = pdfs.MSR();
+      Ag = pdfs.MSR(reference_MSR);
     else
       Ag = 1;
 

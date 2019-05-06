@@ -51,7 +51,7 @@ Compute<T>::Compute(int const &Seed, std::string const &InputCardName) :_InputCa
 
     std::vector<double> integration_result = gl.integrate_v(0, 1, MomDens);
 
-    _reference_MSR= 1;//integration_result[0] + integration_result[1];
+    _reference_MSR= integration_result[0] + integration_result[1];
 }
 
 template <class T>
@@ -64,6 +64,12 @@ template <class T>
 int Compute<T>::GetNParameters()
 {
     return _np;
+}
+
+template <class T>
+double Compute<T>::Getreference_MSR()
+{
+    return _reference_MSR;
 }
 
 //Functions
