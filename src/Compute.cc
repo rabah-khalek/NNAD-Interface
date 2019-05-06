@@ -61,12 +61,19 @@ vector<T> Compute<T>::Predictions()
     output.reserve(_nd);
     YAML::Node InputCard = YAML::LoadFile((_InputCardName).c_str());
 
+    bool MSR=InputCard["MSR"].as<bool>();
+
     T *pdf;
     T *res;
 
     int pos = 0;
 
-    T Ag = _pdfs.MSR();
+    T Ag;
+    if(MSR)
+    Ag = _pdfs.MSR();
+    else
+    Ag = T{1.};
+    
     
     for (auto Dataset : InputCard["Datasets"])
     {
@@ -130,6 +137,8 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
 
     YAML::Node InputCard = YAML::LoadFile((_InputCardName).c_str());
 
+    bool MSR = InputCard["MSR"].as<bool>();
+    
     const int NPDF = 1 + _np;
 
     double *pdf;
@@ -140,7 +149,12 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
     std::vector<double> MSRDerivatives = _pdfs.MSRDerive();
     double ints = MSRDerivatives[0];
     double intg = MSRDerivatives[1];
-    double A_g = (1 - ints) / intg;
+
+    double Ag;
+    if(MSR)
+    Ag = (1 - ints) / intg;
+    else
+    Ag = 1;
 
     for (auto Dataset : InputCard["Datasets"])
     {
@@ -161,10 +175,10 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
                 for (int fl = 0; fl < NonZero; fl++)
                     pdf[n * DSz + fl * Nx + i] = 0;
 
-                if(n==0)
+                if(n==0 || !MSR)
                 {
                     pdf[n * DSz + i] = vpdfs[3 * n];                  // Singlet (fl = 0)
-                    pdf[n * DSz + Nx + i] =A_g*vpdfs[3 * n + 1];     // Gluon (fl = 1)
+                    pdf[n * DSz + Nx + i] =Ag*vpdfs[3 * n + 1];     // Gluon (fl = 1)
                     pdf[n * DSz + 3 * Nx + i] = vpdfs[3 * n + 2]; // T8 (fl = 5)
                 }
                 else
@@ -175,9 +189,9 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
                     double dg = vpdfs[3 * n + 1];
                     double intds = MSRDerivatives.at(3 * n);
                     double intdg = MSRDerivatives.at(3 * n + 1);
-                    double dA_g = -intdg / pow(intg, 2) - ((intds * intg) - (ints * intdg)) / pow(intg, 2);
+                    double dAg = -intdg / pow(intg, 2) - ((intds * intg) - (ints * intdg)) / pow(intg, 2);
 
-                    pdf[n * DSz + Nx + i] = dg * A_g + g * dA_g;                      // Gluon (fl = 1)
+                    pdf[n * DSz + Nx + i] = dg * Ag + g * dAg;                      // Gluon (fl = 1)
                     pdf[n * DSz + 3 * Nx + i] = vpdfs[3 * n + 2]; // T8 (fl = 5)
                 }
                 

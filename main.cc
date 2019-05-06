@@ -217,7 +217,13 @@ int main(int argc, char *argv[])
     GluonGridtxt << "#x Gluon Gluon_error" << endl;
     T8Gridtxt << "#x T8 T8_error" << endl;
 
-    double Ag = pdfs.MSR();
+
+    double Ag;
+    bool MSR = InputCard["MSR"].as<bool>();
+    if (MSR)
+      Ag = pdfs.MSR();
+    else
+      Ag = 1;
 
     for (int xi = 0; xi < n; xi++) //[cogged]
     {
