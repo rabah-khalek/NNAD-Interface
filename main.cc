@@ -176,6 +176,7 @@ int main(int argc, char *argv[])
 
   ceres::Solver::Options options;
   options.max_num_iterations = InputCard["Iterations"].as<int>();
+  options.use_nonmonotonic_steps = InputCard["use_nonmonotonic_steps"].as<bool>();
   options.minimizer_progress_to_stdout = true;
   options.function_tolerance = 1e-10;
   options.parameter_tolerance = 1e-10;

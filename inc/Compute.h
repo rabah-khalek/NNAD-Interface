@@ -103,4 +103,5 @@ class Compute
     int _nd;
     vector<string> _chosen_sets;
     std::map<T, T> _m_As;
+    double _reference_MSR;
     };

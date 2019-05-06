@@ -9,6 +9,8 @@ max_sigma: 0.2 # percent relative uncertainty
 min_sigma: 0.1 # percent relative uncertainty
 
 ForceT3toBeZero: on
-MSR: false
+MSR: true
+
+use_nonmonotonic_steps: false
 
 Iterations: 1000

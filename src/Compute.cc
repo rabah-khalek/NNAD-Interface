@@ -25,7 +25,33 @@ Compute<T>::Compute(int const &Seed, std::string const &InputCardName) :_InputCa
     }
 
     _np = _pdfs.GetParameterNumber();
-    
+
+    const auto MomDens = [=](double const &x) -> std::vector<double> {
+        vector<double> xfAll;
+        int pos = 0;
+        for (auto Dataset : InputCard["Datasets"])
+        {
+            const double Q0 = sqrt(_FKs.at(pos).GetQ20());
+
+            LHAPDF::PDFSet PDFSet((InputCard["CT0_PDF"].as<std::string>()).c_str());
+            LHAPDF::PDF *PDF = PDFSet.mkPDF(0);
+
+            // Singlet distribution
+            xfAll.push_back(PDF->xfxQ(1, x, Q0) + PDF->xfxQ(-1, x, Q0)     //d+dbar
+                            + PDF->xfxQ(2, x, Q0) + PDF->xfxQ(-2, x, Q0)   //u+ubar
+                            + PDF->xfxQ(3, x, Q0) + PDF->xfxQ(-3, x, Q0)); //s+sbar
+                                                                           //+ PDF->xfxQ(4, x, Q0) + PDF->xfxQ(-4, x, Q0)); //c+cbar
+            // gluon distribution
+            xfAll.push_back(PDF->xfxQ(0, x, Q0));
+            pos++;
+        }
+        return xfAll;
+    };
+    Rosetta::GaussLegendreQuadrature<double, 100> gl;
+
+    std::vector<double> integration_result = gl.integrate_v(0, 1, MomDens);
+
+    _reference_MSR= 1;//integration_result[0] + integration_result[1];
 }
 
 template <class T>
@@ -70,7 +96,7 @@ vector<T> Compute<T>::Predictions()
 
     T Ag;
     if(MSR)
-    Ag = _pdfs.MSR();
+    Ag = _pdfs.MSR(_reference_MSR);
     else
     Ag = T{1.};
     
@@ -152,7 +178,7 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
 
     double Ag;
     if(MSR)
-    Ag = (1 - ints) / intg;
+        Ag = (_reference_MSR - ints) / intg;
     else
     Ag = 1;
 
@@ -189,7 +215,7 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
                     double dg = vpdfs[3 * n + 1];
                     double intds = MSRDerivatives.at(3 * n);
                     double intdg = MSRDerivatives.at(3 * n + 1);
-                    double dAg = -intdg / pow(intg, 2) - ((intds * intg) - (ints * intdg)) / pow(intg, 2);
+                    double dAg = -(_reference_MSR*intdg) / pow(intg, 2) - ((intds * intg) - (ints * intdg)) / pow(intg, 2);
 
                     pdf[n * DSz + Nx + i] = dg * Ag + g * dAg;                      // Gluon (fl = 1)
                     pdf[n * DSz + 3 * Nx + i] = vpdfs[3 * n + 2]; // T8 (fl = 5)
@@ -289,7 +315,41 @@ std::vector<std::pair<double, double>> Compute<double>::PseudoData()
     }
     return output;
 }
+/*
+template <>
+double Compute<double>::reference_MSR()
+{
 
+    YAML::Node InputCard = YAML::LoadFile((_InputCardName).c_str());
+    const auto MomDens = [=](double const &x) -> std::vector<double> 
+    {
+        vector<double> xfAll;
+        int pos = 0;
+        for (auto Dataset : InputCard["Datasets"])
+        {
+            const double Q0 = sqrt(_FKs.at(pos).GetQ20());
+
+            LHAPDF::PDFSet PDFSet((InputCard["CT0_PDF"].as<std::string>()).c_str());
+            LHAPDF::PDF *PDF = PDFSet.mkPDF(0);
+
+            // Singlet distribution
+            xfAll.push_back(PDF->xfxQ(1, x, Q0) + PDF->xfxQ(-1, x, Q0)     //d+dbar
+                            + PDF->xfxQ(2, x, Q0) + PDF->xfxQ(-2, x, Q0)   //u+ubar
+                            + PDF->xfxQ(3, x, Q0) + PDF->xfxQ(-3, x, Q0)); //s+sbar
+                                                                           //+ PDF->xfxQ(4, x, Q0) + PDF->xfxQ(-4, x, Q0)); //c+cbar
+            // gluon distribution
+            xfAll.push_back(PDF->xfxQ(0, x, Q0));
+            pos++;
+        }
+        return xfAll;
+    };
+    Rosetta::GaussLegendreQuadrature<double, 100> gl;
+
+    std::vector<double> integration_result = gl.integrate_v(0, 1, MomDens);
+
+    return integration_result[0] + integration_result[1];
+}
+*/
 // template fixed types
 template class Compute<double>;                               //<! for numeric and analytic
 template class Compute<ceres::Jet<double, GLOBALS::kStride>>; //<! for automatic

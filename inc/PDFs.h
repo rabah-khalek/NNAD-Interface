@@ -19,7 +19,7 @@ public:
   std::vector<T> GetParameters();
   int GetParameterNumber();
 
-  T MSR() const;
+  T MSR(double reference_MSR=1) const;
   std::vector<double> MSRDerive() const;
 
   std::vector<T> Evaluate(std::vector<T> const &) const;
@@ -30,6 +30,6 @@ private:
   std::vector<T> _Parameters;
   std::string _InputCardName;
   FeedForwardNN<T> *_nn;
-  Rosetta::GaussLegendreQuadrature<T, 120> _gl;
+  Rosetta::GaussLegendreQuadrature<T, 1000> _gl;
   int _nnp;
 };

@@ -44,7 +44,7 @@ int PDFs<T>::GetParameterNumber()
 }
 
 template <class T>
-T PDFs<T>::MSR() const
+T PDFs<T>::MSR(double reference_MSR) const
 {
     std::vector<T> vpdfs1 = _nn->Evaluate({T{1}, T{0}});
     const auto MomDens = [=](T const &x) -> std::vector<T> 
@@ -58,7 +58,7 @@ T PDFs<T>::MSR() const
 
     std::vector<T> integration_result = _gl.integrate_v(T(0), T{1}, MomDens);
 
-    return ((T{1.} - integration_result[0]) / integration_result[1]);
+    return ((T{reference_MSR} - integration_result[0]) / integration_result[1]);
 }
 
 template <class T>
