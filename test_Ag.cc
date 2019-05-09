@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     int pos = 0;
     const auto MomDens = [=](double const &x) -> std::vector<double> {
         vector<double> xfAll;
-        /*
+
         for (auto Dataset : InputCard["Datasets"])
         {
 
@@ -38,11 +38,6 @@ int main(int argc, char *argv[])
             
         }
         return xfAll;
-        */
-       xfAll.push_back(x);
-       xfAll.push_back(-x);
-
-       return xfAll;
     };
     Rosetta::GaussLegendreQuadrature<double, 100> gl;
 
