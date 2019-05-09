@@ -1,0 +1,4 @@
+for i in `seq 0 50`;
+do
+        ./main InputCard.yaml
+done

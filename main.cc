@@ -186,6 +186,25 @@ int main(int argc, char *argv[])
   Solve(options, &problem, &summary);
   cout << summary.FullReport() << "\n";
 
+  string ResultsIndexName = InputCard["ResultsIndex"].as<string>();
+  //ifstream f2(("results/"+ResultsIndexName).c_str());
+  int totNdata = Data.size(); 
+  if (2 * summary.final_cost / totNdata < 1.1)
+  {
+    ofstream output2;
+    output2.open(("results/meth_" + ResultsIndexName).c_str(), ios::out | ios::app);
+    output2 << Seed << "\t" << summary.num_linear_solves << "\t" << 2 * summary.initial_cost / totNdata << "\t" << 2 * summary.final_cost / totNdata << "\t" << 0 << endl;
+  }
+
+  //===================== writing the results file name and chi2 into a txt file
+
+  ////if(!(f2.good())) system(("mkdir "+ResultsFolder).c_str());
+  ofstream output;
+  output.open(("results/" + ResultsIndexName).c_str(), ios::out | ios::app);
+  output << Seed << " " << 2 * summary.final_cost / totNdata << " " << ResultsFolder << endl;
+  output.close();
+  // ============================================================
+
   std::vector<double> final_pars;
   final_pars.reserve(np);
   for(int i=0;i<np;i++)
