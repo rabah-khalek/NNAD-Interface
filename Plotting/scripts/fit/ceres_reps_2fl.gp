@@ -49,7 +49,7 @@ set bmargin at screen 0.7
 set lmargin at screen 0.105
 set rmargin at screen 0.945
 
-set ylabel "g(x,A)"
+set ylabel "g(x)"
 unset xlabel
 unset arrow
 #for [j=0:0] "kin_coverage/x.dat" u 1:(-1):(0):(5) with vectors lw 0.05 lc rgb "red" nohead notitle,\
@@ -71,7 +71,7 @@ set bmargin at screen 0.4
 set lmargin at screen 0.105
 set rmargin at screen 0.945
 unset arrow
-set ylabel "[{/Symbol=\123} + 1/4 T_{8}](x,A)"
+set ylabel "[{/Symbol=\123} + 1/4 T_{8}](x)"
 set label "Preliminary, Q_{0} = 1.3 [GeV]" center at 0.03,-0.5 tc rgb"#cccccc"
 
      #for [j=0:0] "kin_coverage/x.dat" u 1:(3):2 with labels offset 0,char 0.6 rotate by 45
@@ -101,7 +101,7 @@ set xtics(1e-02 0, ""2e-02 1, ""3e-02 1, ""4e-02 1, ""5e-02 1, ""6e-02 1, ""7e-0
           1e-01 0, ""2e-01 1, ""3e-01 1, ""4e-01 1, ""5e-01 1, ""6e-01 1, ""7e-01 1, ""8e-01 1, ""9e-01 1,\
           1e+00 0) #font 'Helvetica,36'
 
-set ylabel "{/Symbol=\162}(x,A)"
+set ylabel "{/Symbol=\162}(x)"
 set xlabel "x"
 set label "Preliminary, Q_{0} = 1.3 [GeV]" center at 0.03,-1.5 tc rgb"#cccccc"
 

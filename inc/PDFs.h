@@ -30,6 +30,6 @@ private:
   std::vector<T> _Parameters;
   std::string _InputCardName;
   FeedForwardNN<T> *_nn;
-  Rosetta::GaussLegendreQuadrature<T, 1000> _gl;
+  Rosetta::GaussLegendreQuadrature<T, 10> _gl;
   int _nnp;
 };

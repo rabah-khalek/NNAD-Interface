@@ -47,7 +47,7 @@ Compute<T>::Compute(int const &Seed, std::string const &InputCardName) :_InputCa
         }
         return xfAll;
     };
-    Rosetta::GaussLegendreQuadrature<double, 100> gl;
+    Rosetta::GaussLegendreQuadrature<double, 10> gl;
 
     std::vector<double> integration_result = gl.integrate_v(0, 1, MomDens);
 
@@ -227,7 +227,6 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
                     pdf[n * DSz + 3 * Nx + i] = vpdfs[3 * n + 2]; // T8 (fl = 5)
                 }
                 
-
             }
         }
         int nd = _FKs.at(pos).GetNData();
@@ -316,7 +315,7 @@ std::vector<std::pair<double, double>> Compute<double>::PseudoData()
     {
         std::pair<double, double> entry;
         entry.first = temp_output.at(i);
-        entry.second = (entry.first)*(InputCard["max_sigma"].as<double>() * (rand() % 100) - InputCard["min_sigma"].as<double>());
+        entry.second = (entry.first)*(InputCard["max_sigma"].as<double>() *1e-2* (rand() % 100) - InputCard["min_sigma"].as<double>());
         output.push_back(entry);
     }
     return output;

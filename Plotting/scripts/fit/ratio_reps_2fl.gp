@@ -33,7 +33,7 @@ set label "Level-0 Closure Test" center at 1.1,3.8 font 'Helvetica,15'
 set label "Preliminary, Q_{0} = 1.3 [GeV]" center at 0.03,-0.5 tc rgb"#cccccc"
 
 
-set label "g(x,A)" center at 0.03,3.2 font 'Helvetica,15'
+set label "g(x)" center at 0.03,3.2 font 'Helvetica,15'
 #set label "|{/Symbol h}|<0.8" at 37.5,6e-5
 #set key at 49,3e-1 spacing 1.2
 
@@ -50,7 +50,7 @@ set bmargin at screen 0.5
 set lmargin at screen 0.03
 set rmargin at screen 0.48
 
-#set ylabel "g(x,A)"
+#set ylabel "g(x)"
 unset xlabel
 unset arrow
 
@@ -82,7 +82,7 @@ set rmargin at screen 0.48
 
 set label  "g Ratio" center at 0.03,2.3 font 'Helvetica,15'
 #set xlabel "x"
-#set ylabel "g(x,A)"
+#set ylabel "g(x)"
 
 set xtics(""1e-02 0, ""2e-02 1, ""3e-02 1, ""4e-02 1, ""5e-02 1, ""6e-02 1, ""7e-02 1, ""8e-02 1, ""9e-02 1,\
           ""1e-01 0, ""2e-01 1, ""3e-01 1, ""4e-01 1, ""5e-01 1, ""6e-01 1, ""7e-01 1, ""8e-01 1, ""9e-01 1,\
@@ -120,8 +120,8 @@ unset xlabel
           ""1e-01 0, ""2e-01 1, ""3e-01 1, ""4e-01 1, ""5e-01 1, ""6e-01 1, ""7e-01 1, ""8e-01 1, ""9e-01 1,\
           ""1e+00 0)
 
-set label  "F_{2}^{LO} = [{/Symbol=\123} + 1/4 T_{8}](x,A)" center at 0.03,3.2 font 'Helvetica,15'
-#set ylabel "[{/Symbol=\123} + 1/4 T_{8}](x,A)"
+set label  "F_{2}^{LO} = [{/Symbol=\123} + 1/4 T_{8}](x)" center at 0.03,3.2 font 'Helvetica,15'
+#set ylabel "[{/Symbol=\123} + 1/4 T_{8}](x)"
 set label "Preliminary, Q_{0} = 1.3 [GeV]" center at 0.03,-0.5 tc rgb"#cccccc"
 
      #for [j=0:0] "kin_coverage/x.dat" u 1:(3):2 with labels offset 0,char 0.6 rotate by 45
@@ -151,7 +151,7 @@ set rmargin at screen 0.97
 set arrow 1 lt 8 lc rgb "black" lw 0.1 from 1e-3,1 to 1,1 nohead 
 
 set label  "F_{2}^{LO} Ratio" center at 0.03,2.3 font 'Helvetica,15'
-#set ylabel "[{/Symbol=\123} + 1/4 T_{8}](x,A)"
+#set ylabel "[{/Symbol=\123} + 1/4 T_{8}](x)"
 set label "Preliminary, Q_{0} = 1.3 [GeV]" center at 0.03,-0.5 tc rgb "#cccccc"
 set xlabel "x"
 

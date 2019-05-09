@@ -49,7 +49,7 @@ set bmargin at screen 0.7
 set lmargin at screen 0.105
 set rmargin at screen 0.945
 
-set ylabel "{/Symbol=\123}(x,A)"
+set ylabel "{/Symbol=\123}(x)"
 unset xlabel
 
 plot for [j=1:1] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
@@ -69,7 +69,7 @@ set bmargin at screen 0.4
 set lmargin at screen 0.105
 set rmargin at screen 0.945
 
-set ylabel "g(x,A)"
+set ylabel "g(x)"
 unset xlabel
 
 plot for [j=2:2] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:3:4 with filledcu fs transparent solid 0.5 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
@@ -92,7 +92,7 @@ set bmargin at screen 0.05
 set lmargin at screen 0.105
 set rmargin at screen 0.945
 
-set ylabel "T_{8}(x,A)"
+set ylabel "T_{8}(x)"
 set xlabel "x"
 
 plot for [j=3:3] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\

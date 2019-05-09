@@ -9,9 +9,9 @@ Matrix<T>::Matrix(int const &Lines, int const &Columns, int const &RandomSeed) :
   // Initialise random number generator.
   srand(RandomSeed);
   // Fill in the matrix with random numbers distributed in [-1:1].
-  for (int i = 0; i < _Lines * _Columns; i++)
-    _Matrix[i] = T(2e-2 * (rand() % 100) - 1);
-  /*
+  //for (int i = 0; i < _Lines * _Columns; i++)
+  //  _Matrix[i] = T(2e-2 * (rand() % 100) - 1);
+  
   std::default_random_engine generator(RandomSeed);
   double sd = sqrt(2. / Columns); //He-et-al Initialization [see:https://towardsdatascience.com/random-initialization-for-neural-networks-a-thing-of-the-past-bfcdd806bf9e]
   std::normal_distribution<double> dist(0.0, sd);
@@ -27,7 +27,7 @@ Matrix<T>::Matrix(int const &Lines, int const &Columns, int const &RandomSeed) :
 
     _Matrix[i] = T(init);
   }
-  */
+  
   }
 
   template <class T>

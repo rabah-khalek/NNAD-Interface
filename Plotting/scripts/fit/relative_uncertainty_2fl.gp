@@ -65,7 +65,7 @@ set bmargin at screen 0.05
 set lmargin at screen 0.105
 set rmargin at screen 0.945
 
-set ylabel "{/Symbol=\163}_{F_{2}^{(LO)}}/F_{2}^{(LO)}" #"[{/Symbol=\123} + 1/4 T_{8}](x,A)"
+set ylabel "{/Symbol=\163}_{F_{2}^{(LO)}}/F_{2}^{(LO)}" #"[{/Symbol=\123} + 1/4 T_{8}](x)"
 set label "Preliminary, Q_{0} = 1.3 [GeV]" center at 0.03,-0.5 tc rgb"#cccccc"
 
      #for [j=0:0] "kin_coverage/x.dat" u 1:(3):2 with labels offset 0,char 0.6 rotate by 45
