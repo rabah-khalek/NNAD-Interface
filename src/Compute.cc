@@ -26,15 +26,14 @@ Compute<T>::Compute(int const &Seed, std::string const &InputCardName) :_InputCa
 
     _np = _pdfs.GetParameterNumber();
 
+    LHAPDF::PDFSet PDFSet((InputCard["CT0_PDF"].as<std::string>()).c_str());
+    LHAPDF::PDF *PDF = PDFSet.mkPDF(0);
     const auto MomDens = [=](double const &x) -> std::vector<double> {
         vector<double> xfAll;
         int pos = 0;
         for (auto Dataset : InputCard["Datasets"])
         {
             const double Q0 = sqrt(_FKs.at(pos).GetQ20());
-
-            LHAPDF::PDFSet PDFSet((InputCard["CT0_PDF"].as<std::string>()).c_str());
-            LHAPDF::PDF *PDF = PDFSet.mkPDF(0);
 
             // Singlet distribution
             xfAll.push_back(PDF->xfxQ(1, x, Q0) + PDF->xfxQ(-1, x, Q0)     //d+dbar
@@ -47,11 +46,11 @@ Compute<T>::Compute(int const &Seed, std::string const &InputCardName) :_InputCa
         }
         return xfAll;
     };
-    Rosetta::GaussLegendreQuadrature<double, 10> gl;
+    Rosetta::GaussLegendreQuadrature<double, 10000> gl;
 
     std::vector<double> integration_result = gl.integrate_v(0, 1, MomDens);
 
-    _reference_MSR= integration_result[0] + integration_result[1];
+    _reference_MSR = integration_result[0] + integration_result[1];
 }
 
 template <class T>
@@ -310,12 +309,22 @@ std::vector<std::pair<double, double>> Compute<double>::PseudoData()
         pos++;
     }
     std::vector<std::pair<double, double>> output;
-
+    srand(12345);
     for(int i=0;i<temp_output.size();i++)
     {
         std::pair<double, double> entry;
         entry.first = temp_output.at(i);
-        entry.second = (entry.first)*(InputCard["max_sigma"].as<double>() *1e-2* (rand() % 100) - InputCard["min_sigma"].as<double>());
+        double min = InputCard["min_sigma"].as<double>();
+        double max = InputCard["max_sigma"].as<double>();
+        double r = 1e-2 * (rand() % 100);
+        double sd = abs((entry.first) * (max+min) * r - min);
+        while(!sd)
+        {
+            r = 1e-2 * (rand() % 100);
+            sd = abs((entry.first) * (max + min) * r - min);
+        }
+        entry.second =sd;
+        //std::cout<<"CV = "<<entry.first<<", SD = "<<entry.second<<std::endl;
         output.push_back(entry);
     }
     return output;

@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
 
     YAML::Node InputCard = YAML::LoadFile("InputCard.yaml");
     int pos = 0;
+    LHAPDF::PDFSet PDFSet((InputCard["CT0_PDF"].as<std::string>()).c_str());
+    LHAPDF::PDF *PDF = PDFSet.mkPDF(0);
     const auto MomDens = [=](double const &x) -> std::vector<double> {
         vector<double> xfAll;
 
@@ -24,9 +26,6 @@ int main(int argc, char *argv[])
         {
 
             const double Q0 = 1.3;
-
-            LHAPDF::PDFSet PDFSet((InputCard["CT0_PDF"].as<std::string>()).c_str());
-            LHAPDF::PDF *PDF = PDFSet.mkPDF(0);
 
             // Singlet distribution
             xfAll.push_back(PDF->xfxQ(1, x, Q0) + PDF->xfxQ(-1, x, Q0)                   //d+dbar
@@ -39,7 +38,8 @@ int main(int argc, char *argv[])
         }
         return xfAll;
     };
-    Rosetta::GaussLegendreQuadrature<double, 100> gl;
+
+    Rosetta::GaussLegendreQuadrature<double, 10000> gl;
 
     std::vector<double> integration_result = gl.integrate_v(0, 1, MomDens);
 
