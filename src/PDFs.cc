@@ -75,8 +75,6 @@ std::vector<T> PDFs<T>::Evaluate(std::vector<T> const &Input) const
 template <>
 std::vector<double> PDFs<double>::MSRDerive() const
 {
-    std::vector<double> output;
-
     const int NPDF = 1 + _nnp;
 
     std::vector<double> vpdfs1 = _nn->Derive({1, 0});

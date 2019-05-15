@@ -7,12 +7,12 @@ ResultsIndex: aut.dat
 Datasets: [nCT_nPDF_he]
 
 CT0_PDF: NNPDF31_nlo_as_0118
-max_sigma: 0.5 # percent relative uncertainty
+max_sigma: 0.15 # percent relative uncertainty
 min_sigma: 0.1 # percent relative uncertainty
 
 ForceT3toBeZero: on
 MSR: true
 
-use_nonmonotonic_steps: false
+use_nonmonotonic_steps: true
 
 Iterations: 1000
