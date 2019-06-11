@@ -1,0 +1,19 @@
+MainDir: /Users/rabah/Documents/NNAD-Interface
+Seed: -1
+NNarchitecture: [2,10,3]
+Derivatives: Analytic #Analytic #Automatic #Numeric 
+
+ResultsIndex: aut.dat
+
+Datasets: [nCT_nPDF]
+
+CT0_PDF: NNPDF31_nlo_pch_as_0118
+max_sigma: 0.07 # percent relative uncertainty
+min_sigma: 0.05 # percent relative uncertainty
+
+ForceT3toBeZero: on
+MSR: true
+
+use_nonmonotonic_steps: false
+
+Iterations: 2000

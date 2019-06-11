@@ -1,4 +1,4 @@
 for i in `seq 0 100`;
 do
-        ./main InputCard.yaml
+        ./main ../../cards/InputCard.yaml
 done

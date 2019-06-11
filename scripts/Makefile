@@ -9,7 +9,7 @@ INCLUDES += -I/Cellar/yaml-cpp/0.6.2/include/  -I$(PWD)/inc -I/usr/local/include
 
 CXX = clang++ 
 
-TARGET ?= test_Ag
+TARGET ?= grids_avg
 SRC_DIRS ?= ./src
 
 SRCS := $(TARGET).cc #$(shell find $(SRC_DIRS) -name '*.cc') $(TARGET).cc

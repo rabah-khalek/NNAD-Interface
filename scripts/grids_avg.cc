@@ -1,5 +1,4 @@
-#include "Utilities.h"
-#include "Timer.h"
+#include "NNAD/Utilities.h"
 
 //cpp
 #include <vector>
@@ -21,8 +20,6 @@
 #include <unistd.h>
 
 #include "LHAPDF/LHAPDF.h"
-// YAML
-#include "yaml-cpp/yaml.h"
 
 using namespace std;
 
@@ -68,12 +65,11 @@ int main(int argc, char **argv)
       abort();
     }
 
-  Timer timer;
   string ResultsFolder;
 
   ifstream f(txt_with_all_results.c_str());
   if (!(f.good()))
-    Error("The result [" + (string)txt_with_all_results + "] doesn't seem to exist");
+    nnad::Error("The result [" + (string)txt_with_all_results + "] doesn't seem to exist");
 
   double chi2_max = chi2_tolerance;
 
@@ -169,12 +165,12 @@ int main(int argc, char **argv)
   }
   if (DoubleCountingFolders.size() != 0)
   {
-    string ErrorOutput;
+    string nnad::ErrorOutput;
     for (int i = 0; i < DoubleCountingFolders.size(); i++)
     {
-      ErrorOutput += DoubleCountingFolders.at(i) + " ";
+      nnad::ErrorOutput += DoubleCountingFolders.at(i) + " ";
     }
-    Error("Double counting of outputs: " + ErrorOutput);
+    nnad::Error("Double counting of outputs: " + nnad::ErrorOutput);
   }*/
 
   cout << "avg_chi2=" << avg_chi2 / rep_counter << endl;
@@ -188,9 +184,6 @@ int main(int argc, char **argv)
     system(("rm -r " + OutputFile).c_str());
     system(("mkdir " + OutputFile).c_str());
   }
-
-  string input_card_name = "../../cards/InputCard.yaml";
-  YAML::Node InputCard = YAML::LoadFile(input_card_name.c_str());
 
   string Case = "Datasets";
 
@@ -236,7 +229,7 @@ int main(int argc, char **argv)
 
         ONCE = 0;
         if (xs.size() != Nx)
-          Error("Check Nx = " + to_string(Nx) + " against the lines in the text file lines = " + to_string(xs.size()));
+          nnad::Error("Check Nx = " + to_string(Nx) + " against the lines in the text file lines = " + to_string(xs.size()));
       }
 
       for (auto result : results)
@@ -322,7 +315,7 @@ int main(int argc, char **argv)
         counter++;
       }
       if (xs.size() != Nx)
-        Error("Check Nx = " + to_string(Nx) + " against the lines in the text file lines = " + to_string(xs.size()));
+        nnad::Error("Check Nx = " + to_string(Nx) + " against the lines in the text file lines = " + to_string(xs.size()));
     }
 
     for (auto result : results)
@@ -387,7 +380,7 @@ int main(int argc, char **argv)
     string Results_avg = "results/" + s_temp;
     ifstream f2((Results_avg).c_str());
     if (!(f2.good()))
-      Error(Results_avg + " folder doesn't exist, make sure you used ./grids_avg <results_list.dat>");
+      nnad::Error(Results_avg + " folder doesn't exist, make sure you used ./grids_avg <results_list.dat>");
 
     //cleanup
     system(("rm -r Plotting/reps/" + s_temp).c_str());

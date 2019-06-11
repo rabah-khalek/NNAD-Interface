@@ -1,0 +1,3 @@
+cp -r ../Plotting .
+cp -r ../results .
+cp ../scripts/grids_avg .
