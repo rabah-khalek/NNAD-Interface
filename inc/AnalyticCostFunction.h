@@ -6,7 +6,7 @@
 
 // Ceres solver
 #include <ceres/ceres.h>
-#include "FeedForwardNN.h"
+#include "NNAD/FeedForwardNN.h"
 #include "Compute.h"
 
 // Typedef for the data
