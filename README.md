@@ -1,2 +1,2 @@
-# NNAGD-Interface
-An interface to NNAGD(Neural Network library for Analytical Gradient Descent)
+# NNAD-Interface
+An interface to NNAD(Neural Network library with Analytical Derivatives)
