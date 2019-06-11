@@ -14,9 +14,9 @@ PDFs<T>::PDFs(int const &Seed, std::string const &InputCardName) : _Seed(Seed), 
     YAML::Node InputCard = YAML::LoadFile((_InputCardName).c_str());
 
     if (*(InputCard["NNarchitecture"].as<std::vector<int>>().end() - 1) != 3)
-        Error("Outputing more/less than 3 PDFs needs to be implemeneted in PDFs.");
+        nnad::Error("Outputing more/less than 3 PDFs needs to be implemeneted in PDFs.");
 
-    _nn = new FeedForwardNN<T>(InputCard["NNarchitecture"].as<std::vector<int>>(), _Seed);
+    _nn = new nnad::FeedForwardNN<T>(InputCard["NNarchitecture"].as<std::vector<int>>(), _Seed);
     _nnp = _nn->GetParameterNumber();
 
     _Parameters = _nn->GetParameters();

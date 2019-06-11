@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "FeedForwardNN.h"
+#include "NNAD/FeedForwardNN.h"
 #include "PDFs.h"
 #include "Globals.h"
 

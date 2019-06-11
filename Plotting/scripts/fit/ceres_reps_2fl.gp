@@ -11,7 +11,7 @@ colors="red blue #006400"
 colors_fit="red blue #006400"
 outfile="figs/1.ceres_reps_2fl.eps"
 
-#infile="NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) .".dat"
+#infile="lhapdfGrids/lhapdf". word(PDFs,j) .".dat"
 
 set o outfile
 set term post enh col 20 linewidth 1 'Helvetica,14' #size 20,12
@@ -40,8 +40,8 @@ set label "Preliminary, Q_{0} = 1.3 [GeV]" center at 0.03,-0.5 tc rgb"#cccccc"
 set linetype 9 dashtype '-'
 set linetype 8 dashtype '.'
 
-#--- to plot the central value of NNPDF31_nlo_as_0118_grids
-#for [j=1:words(PDFs)] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) .".dat" u 1:2 lt 9 lc rgb word(colors,j) lw 3 with lines notitle #ls j notitle #line lc rgb word(colors,j) lt 2 lw 4 
+#--- to plot the central value of lhapdfGrids
+#for [j=1:words(PDFs)] "lhapdfGrids/lhapdf". word(PDFs,j) .".dat" u 1:2 lt 9 lc rgb word(colors,j) lw 3 with lines notitle #ls j notitle #line lc rgb word(colors,j) lt 2 lw 4 
 
 #Panel1
 set tmargin at screen 0.95
@@ -54,8 +54,8 @@ unset xlabel
 unset arrow
 #for [j=0:0] "kin_coverage/x.dat" u 1:(-1):(0):(5) with vectors lw 0.05 lc rgb "red" nohead notitle,\
      
-plot for [j=2:2] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) .".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
-     for [j=2:2] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) .".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
+plot for [j=2:2] "lhapdfGrids/". word(PDFs,j) .".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
+     for [j=2:2] "lhapdfGrids/". word(PDFs,j) .".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
      \
      for [j=0:0] "reps/". fitname ."/". j ."/". word(PDFs,2) . ".dat" u 1:($2-$3):($2+$3) with filledcu fs transparent pattern 5 lc rgb word(colors_fit,2) lt 3 lw 3 t "nNNPDF1.0",\
      for [j=0:0] "reps/". fitname ."/". j ."/". word(PDFs,2) . ".dat" u 1:($2-$3) lt 1 lc rgb word(colors_fit,2) lw 1 with lines notitle,\
@@ -75,8 +75,8 @@ set ylabel "[{/Symbol=\123} + 1/4 T_{8}](x)"
 set label "Preliminary, Q_{0} = 1.3 [GeV]" center at 0.03,-0.5 tc rgb"#cccccc"
 
      #for [j=0:0] "kin_coverage/x.dat" u 1:(3):2 with labels offset 0,char 0.6 rotate by 45
-plot for [j=3:3] "NNPDF31_nlo_as_0118_grids/lhapdfSigmaT8.dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb "#8A2BE2" lt 3 lw 3 t "EPPS16",\
-     for [j=3:3] "NNPDF31_nlo_as_0118_grids/lhapdfSigmaT8.dat" u 1:2 lt 8 lc rgb "#8A2BE2" lw 3 with lines notitle,\
+plot for [j=3:3] "lhapdfGrids/SigmaT8.dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb "#8A2BE2" lt 3 lw 3 t "EPPS16",\
+     for [j=3:3] "lhapdfGrids/SigmaT8.dat" u 1:2 lt 8 lc rgb "#8A2BE2" lw 3 with lines notitle,\
      \
      for [j=0:0] "reps/". fitname ."/". j ."/SigmaT8.dat" u 1:($2-$3):($2+$3) with filledcu fs transparent pattern 5 lc rgb "#8A2BE2" lt 3 lw 3 t "nNNPDF1.0",\
      for [j=0:0] "reps/". fitname ."/". j ."/SigmaT8.dat" u 1:($2-$3) lt 1 lc rgb "#8A2BE2" lw 1 with lines notitle,\
@@ -88,10 +88,10 @@ plot for [j=3:3] "NNPDF31_nlo_as_0118_grids/lhapdfSigmaT8.dat" u 1:3:4 with fill
      #for [j=0:0] "<paste reps/". fitname ."/". j ."/". word(PDFs,3) . ".dat reps/". fitname ."/". j ."/". word(PDFs,1) . ".dat" u 1:(($2)/4+($5))+(($3/16)+($6)-2*sqrt(($3/16)*($6))) lt 1 lc rgb "#8A2BE2" lw 1 with lines notitle,\
      #for [j=0:0] "<paste reps/". fitname ."/". j ."/". word(PDFs,3) . ".dat reps/". fitname ."/". j ."/". word(PDFs,1) . ".dat" u 1:($2)/4+($5) lt 1 lc rgb "#8A2BE2" lw 3 with lines notitle,\
      \
-     #for [j=3:3] "<paste NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) .".dat NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,1) .".dat" u 1:($2)/4+($6)-((($4-$2)/16)+($8-$6)-2*sqrt((($4-$2)/16)*($8-$6))):($2)/4+($6)+((($4-$2)/16)+($8-$6)-2*sqrt((($4-$2)/16)*($8-$6))) with filledcu fs transparent solid 0.3 noborder lc rgb "#8A2BE2" lt 3 lw 3 t "EPPS16",\
-     #for [j=3:3] "<paste NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) .".dat NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,1) .".dat" u 1:($2)/4+($6)-((($4-$2)/16)+($8-$6)-2*sqrt((($4-$2)/16)*($8-$6))) lt 8 lc rgb "#8A2BE2" lw 1 with lines notitle,\
-     #for [j=3:3] "<paste NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) .".dat NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,1) .".dat" u 1:($2)/4+($6)+((($4-$2)/16)+($8-$6)-2*sqrt((($4-$2)/16)*($8-$6))) lt 8 lc rgb "#8A2BE2" lw 1 with lines notitle,\
-     #for [j=3:3] "<paste NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) .".dat NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,1) .".dat" u 1:($2)/4+($6) lt 8 lc rgb "#8A2BE2" lw 3 with lines notitle,\
+     #for [j=3:3] "<paste lhapdfGrids/". word(PDFs,j) .".dat lhapdfGrids/". word(PDFs,1) .".dat" u 1:($2)/4+($6)-((($4-$2)/16)+($8-$6)-2*sqrt((($4-$2)/16)*($8-$6))):($2)/4+($6)+((($4-$2)/16)+($8-$6)-2*sqrt((($4-$2)/16)*($8-$6))) with filledcu fs transparent solid 0.3 noborder lc rgb "#8A2BE2" lt 3 lw 3 t "EPPS16",\
+     #for [j=3:3] "<paste lhapdfGrids/". word(PDFs,j) .".dat lhapdfGrids/". word(PDFs,1) .".dat" u 1:($2)/4+($6)-((($4-$2)/16)+($8-$6)-2*sqrt((($4-$2)/16)*($8-$6))) lt 8 lc rgb "#8A2BE2" lw 1 with lines notitle,\
+     #for [j=3:3] "<paste lhapdfGrids/". word(PDFs,j) .".dat lhapdfGrids/". word(PDFs,1) .".dat" u 1:($2)/4+($6)+((($4-$2)/16)+($8-$6)-2*sqrt((($4-$2)/16)*($8-$6))) lt 8 lc rgb "#8A2BE2" lw 1 with lines notitle,\
+     #for [j=3:3] "<paste lhapdfGrids/". word(PDFs,j) .".dat lhapdfGrids/". word(PDFs,1) .".dat" u 1:($2)/4+($6) lt 8 lc rgb "#8A2BE2" lw 3 with lines notitle,\
      
 
 

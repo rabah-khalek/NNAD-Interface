@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "FeedForwardNN.h"
+#include "NNAD/FeedForwardNN.h"
 #include "rosetta.h"
 #include "yaml-cpp/yaml.h"
 #include "ceres/ceres.h"
@@ -29,7 +29,7 @@ private:
   int _Seed;
   std::vector<T> _Parameters;
   std::string _InputCardName;
-  FeedForwardNN<T> *_nn;
+  nnad::FeedForwardNN<T> *_nn;
   Rosetta::GaussLegendreQuadrature<T, 100> _gl;
   int _nnp;
 };

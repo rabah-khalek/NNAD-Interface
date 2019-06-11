@@ -16,7 +16,7 @@ Compute<T>::Compute(int const &Seed, std::string const &InputCardName) :_InputCa
     _nd=0;
     for (auto Dataset : InputCard["Datasets"])
     {
-        const std::string FK_path = "FK/FK_"+Dataset.as<string>()+".dat";
+        const std::string FK_path = InputCard["MainDir"].as<std::string>()+"/FK/FK_"+Dataset.as<string>()+".dat";
         
         NNPDF_APFELgrid::FKTable<double> FK(FK_path);
 
@@ -50,7 +50,7 @@ Compute<T>::Compute(int const &Seed, std::string const &InputCardName) :_InputCa
 
     std::vector<double> integration_result = gl.integrate_v(0, 1, MomDens);
 
-    _reference_MSR = integration_result[0] + integration_result[1];
+    _reference_MSR = 1;//integration_result[0] + integration_result[1];
 }
 
 template <class T>

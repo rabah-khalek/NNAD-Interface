@@ -12,7 +12,7 @@ colors_fit="red blue #006400"
 
 outfile="figs/ind_pdfplot.eps"
 
-#infile="NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat"
+#infile="lhapdfGrids/". word(PDFs,j) . ".dat"
 
 set o outfile
 set term post enh col 20 linewidth 1 'Helvetica,14' #size 20,12
@@ -40,8 +40,8 @@ set label "Preliminary Level-0 Closure Test" at 0.007,3.5 font 'Helvetica,20'
 set linetype 9 dashtype '-'
 set linetype 8 dashtype '.'
 
-#--- to plot the central value of NNPDF31_nlo_as_0118_grids
-#for [j=1:words(PDFs)] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:2 lt 9 lc rgb word(colors,j) lw 3 with lines notitle #ls j notitle #line lc rgb word(colors,j) lt 2 lw 4 
+#--- to plot the central value of lhapdfGrids
+#for [j=1:words(PDFs)] "lhapdfGrids/". word(PDFs,j) . ".dat" u 1:2 lt 9 lc rgb word(colors,j) lw 3 with lines notitle #ls j notitle #line lc rgb word(colors,j) lt 2 lw 4 
 
 #Panel1
 set tmargin at screen 0.95
@@ -52,8 +52,8 @@ set rmargin at screen 0.945
 set ylabel "{/Symbol=\123}(x)"
 unset xlabel
 
-plot for [j=1:1] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
-     for [j=1:1] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
+plot for [j=1:1] "lhapdfGrids/". word(PDFs,j) . ".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
+     for [j=1:1] "lhapdfGrids/". word(PDFs,j) . ".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
      \
      for [j=0:0]  "reps/". fitname ."/". j ."/". word(PDFs,1) . ".dat" u 1:($2-$3):($2+$3) with filledcu fs transparent pattern 7 lc rgb word(colors_fit,1) lt 3 lw 3 t "nNNPDF1.0",\
      for [j=0:0]  "reps/". fitname ."/". j ."/". word(PDFs,1) . ".dat" u 1:($2-$3) lt 1 lc rgb word(colors_fit,1) lw 1 with lines notitle,\
@@ -72,8 +72,8 @@ set rmargin at screen 0.945
 set ylabel "g(x)"
 unset xlabel
 
-plot for [j=2:2] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:3:4 with filledcu fs transparent solid 0.5 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
-     for [j=2:2] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
+plot for [j=2:2] "lhapdfGrids/". word(PDFs,j) . ".dat" u 1:3:4 with filledcu fs transparent solid 0.5 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
+     for [j=2:2] "lhapdfGrids/". word(PDFs,j) . ".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
      \
      for [j=0:0]  "reps/". fitname ."/". j ."/". word(PDFs,2) . ".dat" u 1:($2-$3):($2+$3) with filledcu fs transparent pattern 7 lc rgb word(colors_fit,2) lt 3 lw 3 t "nNNPDF1.0",\
      for [j=0:0]  "reps/". fitname ."/". j ."/". word(PDFs,2) . ".dat" u 1:($2-$3) lt 1 lc rgb word(colors_fit,2) lw 1 with lines notitle,\
@@ -95,8 +95,8 @@ set rmargin at screen 0.945
 set ylabel "T_{8}(x)"
 set xlabel "x"
 
-plot for [j=3:3] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
-     for [j=3:3] "NNPDF31_nlo_as_0118_grids/lhapdf". word(PDFs,j) . ".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
+plot for [j=3:3] "lhapdfGrids/". word(PDFs,j) . ".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "EPPS16",\
+     for [j=3:3] "lhapdfGrids/". word(PDFs,j) . ".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
      \
      \
      for [j=0:0]  "reps/". fitname ."/". j ."/". word(PDFs,3) . ".dat" u 1:($2-$3):($2+$3) with filledcu fs transparent pattern 7 lc rgb word(colors_fit,3) lt 3 lw 3 t "nNNPDF1.0",\
