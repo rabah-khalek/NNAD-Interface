@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
   }
 
   InputCard = YAML::LoadFile((InputCardName).c_str());
-
+  string ResultsPath = InputCard["MainDir"].as<string>()+"/";
   //Allocating a result folder name in string
   std::time_t t_temp = std::time(0); // get time now
   std::tm *now = std::localtime(&t_temp);
@@ -61,12 +61,12 @@ int main(int argc, char *argv[])
                          to_string(now->tm_min) + '.' +
                          to_string(now->tm_sec);
 
-  ifstream f((ResultsFolder).c_str());
+  ifstream f((ResultsPath+ResultsFolder).c_str());
   if (f.good())
     exit(1);
 
-  system(("mkdir " + ResultsFolder).c_str());
-  system(("cp " + InputCardName + " " + ResultsFolder + "/InputCard.yaml").c_str());
+  system(("mkdir " + ResultsPath+ResultsFolder).c_str());
+  system(("cp " + InputCardName + " " + ResultsPath+ResultsFolder + "/InputCard.yaml").c_str());
 
   // Timer
   Timer t;
@@ -192,7 +192,7 @@ int main(int argc, char *argv[])
   if (2 * summary.final_cost / totNdata < 1.1)
   {
     ofstream output2;
-    output2.open(("results/meth_" + ResultsIndexName).c_str(), ios::out | ios::app);
+    output2.open((ResultsPath + "results/meth_" + ResultsIndexName).c_str(), ios::out | ios::app);
     output2 << Seed << "\t" << summary.num_linear_solves << "\t" << 2 * summary.initial_cost / totNdata << "\t" << 2 * summary.final_cost / totNdata << "\t" << 0 << endl;
   }
 
@@ -200,8 +200,8 @@ int main(int argc, char *argv[])
 
   ////if(!(f2.good())) system(("mkdir "+ResultsFolder).c_str());
   ofstream output;
-  output.open(("results/" + ResultsIndexName).c_str(), ios::out | ios::app);
-  output << Seed << " " << 2 * summary.final_cost / totNdata << " " << ResultsFolder << endl;
+  output.open((ResultsPath + "results/" + ResultsIndexName).c_str(), ios::out | ios::app);
+  output << Seed << " " << 2 * summary.final_cost / totNdata << " " << ResultsPath+ResultsFolder << endl;
   output.close();
   // ============================================================
 
@@ -213,7 +213,7 @@ int main(int argc, char *argv[])
   PDFs<double> pdfs(Seed, InputCardName);
   pdfs.SetParameters(final_pars);
 
-  std::cout << "\033[1;32mResults in: \033[1;36m" << ResultsFolder << "\033[0m\033[0m\n";
+  std::cout << "\033[1;32mResults in: \033[1;36m" << ResultsPath+ResultsFolder << "\033[0m\033[0m\n";
   std::cout << "\n";
 
   cout << "Generating PDFgrids..." << endl;
@@ -222,7 +222,7 @@ int main(int argc, char *argv[])
   double n = 1001;
   double xstep = (log(xmax_grid) - log(xmin_grid)) / n;
 
-  string grids_OutputFile = ResultsFolder + "/PDFGrids";
+  string grids_OutputFile = ResultsPath+ResultsFolder + "/PDFGrids";
   ifstream f_grids((grids_OutputFile).c_str());
   if (!(f_grids.good()))
     system(("mkdir " + grids_OutputFile).c_str());
