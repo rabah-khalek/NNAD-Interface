@@ -75,8 +75,6 @@ std::vector<T> PDFs<T>::Evaluate(std::vector<T> const &Input) const
 template <>
 std::vector<double> PDFs<double>::MSRDerive() const
 {
-    const int NPDF = 1 + _nnp;
-
     std::vector<double> vpdfs1 = _nn->Derive({1, 0});
     const auto MomDens = [=](double const &x) -> std::vector<double> {
         std::vector<double> integ_output = _nn->Derive({x, log(x)});
