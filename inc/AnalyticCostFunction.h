@@ -28,9 +28,10 @@ class AnalyticCostFunction : public ceres::CostFunction
                           double **) const;
 
   private:
+    int _Np;
     int _Seed;
     Compute<double> *_compute;
-    int _Np;
-    std::string _InputCardName;
     vectdata _Data;
+    std::string _InputCardName;
+
 };
