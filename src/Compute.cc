@@ -9,7 +9,7 @@ template <class T>
 Compute<T>::Compute(){}
 
 template <class T>
-Compute<T>::Compute(int const &Seed, std::string const &InputCardName) :_InputCardName(InputCardName), _pdfs(PDFs<T>(Seed, _InputCardName))
+Compute<T>::Compute(int const &Seed, std::string const &InputCardName) : _Seed(Seed), _InputCardName(InputCardName), _pdfs(PDFs<T>(Seed, _InputCardName))
 {
     YAML::Node InputCard = YAML::LoadFile((_InputCardName).c_str());
 
@@ -25,30 +25,6 @@ Compute<T>::Compute(int const &Seed, std::string const &InputCardName) :_InputCa
     }
 
     _np = _pdfs.GetParameterNumber();
-
-    LHAPDF::PDFSet PDFSet((InputCard["CT0_PDF"].as<std::string>()).c_str());
-    LHAPDF::PDF *PDF = PDFSet.mkPDF(0);
-    const auto MomDens = [=](double const &x) -> std::vector<double> {
-        vector<double> xfAll;
-        int pos = 0;
-        for (auto Dataset : InputCard["Datasets"])
-        {
-            const double Q0 = sqrt(_FKs.at(pos).GetQ20());
-
-            // Singlet distribution
-            xfAll.push_back(PDF->xfxQ(1, x, Q0) + PDF->xfxQ(-1, x, Q0)     //d+dbar
-                            + PDF->xfxQ(2, x, Q0) + PDF->xfxQ(-2, x, Q0)   //u+ubar
-                            + PDF->xfxQ(3, x, Q0) + PDF->xfxQ(-3, x, Q0)); //s+sbar
-                                                                           //+ PDF->xfxQ(4, x, Q0) + PDF->xfxQ(-4, x, Q0)); //c+cbar
-            // gluon distribution
-            xfAll.push_back(PDF->xfxQ(0, x, Q0));
-            pos++;
-        }
-        return xfAll;
-    };
-    Rosetta::GaussLegendreQuadrature<double, 10000> gl;
-
-    std::vector<double> integration_result = gl.integrate_v(0, 1, MomDens);
 
     _reference_MSR = 1;//integration_result[0] + integration_result[1];
 }
@@ -92,20 +68,11 @@ vector<T> Compute<T>::Predictions()
     output.reserve(_nd);
     YAML::Node InputCard = YAML::LoadFile((_InputCardName).c_str());
 
-    bool MSR=InputCard["MSR"].as<bool>();
-
     T *pdf;
     T *res;
 
     int pos = 0;
 
-    T Ag;
-    if(MSR)
-    Ag = _pdfs.MSR(_reference_MSR);
-    else
-    Ag = T{1.};
-    
-    
     for (auto Dataset : InputCard["Datasets"])
     {
         int Nx = _FKs.at(pos).GetNx();
@@ -123,8 +90,8 @@ vector<T> Compute<T>::Predictions()
             std::vector<T> vpdfs = _pdfs.Evaluate({x, log(x)});
 
             pdf[i] = vpdfs.at(0); //Singlet
-            pdf[Nx + i] = Ag * vpdfs.at(1); //Gluon
-            pdf[3 * Nx + i] = vpdfs.at(2);   //T8
+            pdf[Nx + i] = vpdfs.at(1); //Gluon
+            /////pdf[3 * Nx + i] = vpdfs.at(2);   //T8
         }
 
         // Allocate an array for results and perform the convolution.
@@ -168,24 +135,12 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
 
     YAML::Node InputCard = YAML::LoadFile((_InputCardName).c_str());
 
-    bool MSR = InputCard["MSR"].as<bool>();
-    
     const int NPDF = 1 + _np;
 
     double *pdf;
     double *res;
 
     int pos = 0;
-
-    std::vector<double> MSRDerivatives = _pdfs.MSRDerive();
-    double ints = MSRDerivatives[0];
-    double intg = MSRDerivatives[1];
-
-    double Ag;
-    if(MSR)
-        Ag = (_reference_MSR - ints) / intg;
-    else
-    Ag = 1;
 
     for (auto Dataset : InputCard["Datasets"])
     {
@@ -206,25 +161,9 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
                 for (int fl = 0; fl < NonZero; fl++)
                     pdf[n * DSz + fl * Nx + i] = 0;
 
-                if(n==0 || !MSR)
-                {
-                    pdf[n * DSz + i] = vpdfs[3 * n];                  // Singlet (fl = 0)
-                    pdf[n * DSz + Nx + i] =Ag*vpdfs[3 * n + 1];     // Gluon (fl = 1)
-                    pdf[n * DSz + 3 * Nx + i] = vpdfs[3 * n + 2]; // T8 (fl = 5)
-                }
-                else
-                {
-                    pdf[n * DSz + i] = vpdfs[3 * n];                  // Singlet (fl = 0)
-
-                    double g = vpdfs[1];
-                    double dg = vpdfs[3 * n + 1];
-                    double intds = MSRDerivatives.at(3 * n);
-                    double intdg = MSRDerivatives.at(3 * n + 1);
-                    double dAg = -(_reference_MSR*intdg) / pow(intg, 2) - ((intds * intg) - (ints * intdg)) / pow(intg, 2);
-
-                    pdf[n * DSz + Nx + i] = dg * Ag + g * dAg;                      // Gluon (fl = 1)
-                    pdf[n * DSz + 3 * Nx + i] = vpdfs[3 * n + 2]; // T8 (fl = 5)
-                }
+                    pdf[n * DSz + i] = vpdfs[2 * n];                  // Singlet (fl = 0)
+                    pdf[n * DSz + Nx + i] =vpdfs[2 * n + 1];     // Gluon (fl = 1)
+                    /////pdf[n * DSz + 3 * Nx + i] = vpdfs[3 * n + 2]; // T8 (fl = 5)
                 
             }
         }
@@ -284,10 +223,11 @@ std::vector<std::pair<double, double>> Compute<double>::PseudoData()
             else
                 exit(1); //Error("Assign T3 in lhapdfPredictions()");
 
+            xfAll.push_back(0);
             // T8 distribution
-            xfAll.push_back(PDF->xfxQ(2, Xgrid[i], Q0) + PDF->xfxQ(-2, Xgrid[i], Q0)           //u+ubar
-                            + PDF->xfxQ(1, Xgrid[i], Q0) + PDF->xfxQ(-1, Xgrid[i], Q0)         //d+dbar
-                            - 2 * (PDF->xfxQ(3, Xgrid[i], Q0) + PDF->xfxQ(-3, Xgrid[i], Q0))); //s+sbar
+            /////xfAll.push_back(PDF->xfxQ(2, Xgrid[i], Q0) + PDF->xfxQ(-2, Xgrid[i], Q0)           //u+ubar
+            /////                + PDF->xfxQ(1, Xgrid[i], Q0) + PDF->xfxQ(-1, Xgrid[i], Q0)         //d+dbar
+            /////                - 2 * (PDF->xfxQ(3, Xgrid[i], Q0) + PDF->xfxQ(-3, Xgrid[i], Q0))); //s+sbar
 
             for (int fl = 0; fl < NonZero; fl++)
             {

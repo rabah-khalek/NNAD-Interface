@@ -16,4 +16,4 @@ MSR: true
 
 use_nonmonotonic_steps: false
 
-Iterations: 2000
+Iterations: 1000

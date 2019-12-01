@@ -19,8 +19,8 @@ public:
   std::vector<T> GetParameters();
   int GetParameterNumber();
 
-  T MSR(double reference_MSR=1) const;
-  std::vector<double> MSRDerive() const;
+  // T MSR(double reference_MSR=1) const;
+  // std::vector<double> MSRDerive() const;
 
   std::vector<T> Evaluate(std::vector<T> const &) const;
   std::vector<double> Derive(std::vector<double> const &) const;

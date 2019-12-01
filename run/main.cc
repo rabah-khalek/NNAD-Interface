@@ -232,20 +232,19 @@ int main(int argc, char *argv[])
 
     ofstream SigmaGridtxt((grids_OutputFile + "/Sigma.dat").c_str(), ios::out | ios::app);
     ofstream GluonGridtxt((grids_OutputFile + "/Gluon.dat").c_str(), ios::out | ios::app);
-    ofstream T8Gridtxt((grids_OutputFile + "/T8.dat").c_str(), ios::out | ios::app);
+    /////ofstream T8Gridtxt((grids_OutputFile + "/T8.dat").c_str(), ios::out | ios::app);
 
     SigmaGridtxt << "#x Sigma Sigma_error" << endl;
     GluonGridtxt << "#x Gluon Gluon_error" << endl;
-    T8Gridtxt << "#x T8 T8_error" << endl;
+    /////T8Gridtxt << "#x T8 T8_error" << endl;
 
-
-    double Ag;
-    bool MSR = InputCard["MSR"].as<bool>();
-    double reference_MSR=compute.Getreference_MSR();
-    if (MSR)
-      Ag = pdfs.MSR(reference_MSR);
-    else
-      Ag = 1;
+    /////double Ag;
+    /////bool MSR = InputCard["MSR"].as<bool>();
+    /////double reference_MSR=compute.Getreference_MSR();
+    /////if (MSR)
+    /////  Ag = pdfs.MSR(reference_MSR);
+    /////else
+    /////  Ag = 1;
 
     for (int xi = 0; xi < n; xi++) //[cogged]
     {
@@ -253,14 +252,14 @@ int main(int argc, char *argv[])
       vector<double> vpdfs = pdfs.Evaluate({x, log(x)});
 
       SigmaGridtxt << x << " " << vpdfs[0] << endl;
-      GluonGridtxt << x << " " << Ag * vpdfs[1] << endl;
-      T8Gridtxt << x << " " << vpdfs[2] << endl;
+      GluonGridtxt << x << " " << vpdfs[1] << endl;
+      /////T8Gridtxt << x << " " << vpdfs[2] << endl;
 
       xx += xstep;
     }
   
 
   //===============
-    std::cout << "reference_MSR = " << reference_MSR<<std::endl; 
+    //std::cout << "reference_MSR = " << reference_MSR<<std::endl; 
     return 0;
 }

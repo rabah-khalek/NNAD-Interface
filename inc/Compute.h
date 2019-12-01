@@ -105,4 +105,5 @@ class Compute
     vector<string> _chosen_sets;
     std::map<T, T> _m_As;
     double _reference_MSR;
+    int _Seed;
     };

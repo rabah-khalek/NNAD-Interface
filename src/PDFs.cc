@@ -13,8 +13,8 @@ PDFs<T>::PDFs(int const &Seed, std::string const &InputCardName) : _Seed(Seed), 
 
     YAML::Node InputCard = YAML::LoadFile((_InputCardName).c_str());
 
-    if (*(InputCard["NNarchitecture"].as<std::vector<int>>().end() - 1) != 3)
-        nnad::Error("Outputing more/less than 3 PDFs needs to be implemeneted in PDFs.");
+    /////if (*(InputCard["NNarchitecture"].as<std::vector<int>>().end() - 1) != 3)
+    /////    nnad::Error("Outputing more/less than 3 PDFs needs to be implemeneted in PDFs.");
 
     _nn = new nnad::FeedForwardNN<T>(InputCard["NNarchitecture"].as<std::vector<int>>(), _Seed);
     _nnp = _nn->GetParameterNumber();
@@ -44,24 +44,6 @@ int PDFs<T>::GetParameterNumber()
 }
 
 template <class T>
-T PDFs<T>::MSR(double reference_MSR) const
-{
-    std::vector<T> vpdfs1 = _nn->Evaluate({T{1}, T{0}});
-    const auto MomDens = [=](T const &x) -> std::vector<T> 
-    {
-        std::vector<T> integ_output = _nn->Evaluate({x, log(x)});
-        integ_output.erase(integ_output.end() - 1);
-        integ_output.at(0)-=vpdfs1.at(0);
-        integ_output.at(1) -= vpdfs1.at(1);
-        return integ_output;
-    };
-
-    std::vector<T> integration_result = _gl.integrate_v(T(0), T{1}, MomDens);
-
-    return ((T{reference_MSR} - integration_result[0]) / integration_result[1]);
-}
-
-template <class T>
 std::vector<T> PDFs<T>::Evaluate(std::vector<T> const &Input) const
 {
     std::vector<T> vpdfs1 = _nn->Evaluate({T{1}, T{0}});
@@ -73,41 +55,25 @@ std::vector<T> PDFs<T>::Evaluate(std::vector<T> const &Input) const
 }
 
 template <>
-std::vector<double> PDFs<double>::MSRDerive() const
-{
-    std::vector<double> vpdfs1 = _nn->Derive({1, 0});
-    const auto MomDens = [=](double const &x) -> std::vector<double> {
-        std::vector<double> integ_output = _nn->Derive({x, log(x)});
-        for(int i=0;i<integ_output.size();i++)
-            integ_output.at(i)-=vpdfs1.at(i);
-
-        return integ_output;
-    };
-
-    return _gl.integrate_v(0, 1, MomDens);
-}
-
-template <>
 std::vector<double> PDFs<double>::Derive(std::vector<double> const &Input) const
 {
-    std::vector<double> NNderivatives1 = _nn->Derive({1,0});
     std::vector<double> NNderivatives = _nn->Derive(Input);
 
     std::vector<double> output;
 
     const int NPDF = 1 + _nnp;
-    output.reserve(3 * (NPDF));
+    output.reserve(2 * (NPDF));
 
     for (int n = 0; n < NPDF; n++)
     {
         //Singlet
-        output.push_back(NNderivatives[3 * n] - NNderivatives1[3 * n]); // Singlet (fl = 0)
+        output.push_back(NNderivatives[2 * n]); // Singlet (fl = 0)
 
         //Gluon
-        output.push_back(NNderivatives[3 * n + 1] - NNderivatives1[3 * n + 1]);
+        output.push_back(NNderivatives[2 * n + 1]);
 
         //T8
-        output.push_back(NNderivatives[3 * n + 2] - NNderivatives1[3 * n + 2]); // T8 (fl = 5)
+        /////output.push_back(NNderivatives[3 * n + 2] - NNderivatives1[3 * n + 2]); // T8 (fl = 5)
     }
 
     return output;
