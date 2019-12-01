@@ -35,10 +35,10 @@ set rmargin at screen 0.945
 
 plot for [j=1:1] "lhapdfGrids/". word(PDFs,j) .".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "NNPDF3.1 ".word(PDFs,j),\
      for [j=1:1] "lhapdfGrids/". word(PDFs,j) .".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
-     for [j=1:1] "reps/". fitname ."/". j ."/". word(PDFs,j) .".dat" u 1:2 lt 1 lc rgb word(colors,j) lw 3 with lines notitle,\
+     for [j=1:1] "ceres/". word(PDFs,j) .".dat" u 1:2 lt 1 lc rgb word(colors,j) lw 3 with lines notitle,\
      for [j=3:3] "lhapdfGrids/". word(PDFs,j) .".dat" u 1:3:4 with filledcu fs transparent solid 0.3 noborder lc rgb word(colors,j) lt 3 lw 3 t "NNPDF3.1 ".word(PDFs,j),\
      for [j=3:3] "lhapdfGrids/". word(PDFs,j) .".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
-     for [j=3:3] "reps/". fitname ."/". j ."/". word(PDFs,j) .".dat" u 1:2 lt 1 lc rgb word(colors,j) lw 3 with lines notitle,\
+     for [j=3:3] "ceres/". word(PDFs,j) .".dat" u 1:2 lt 1 lc rgb word(colors,j) lw 3 with lines notitle,\
 
 
 
@@ -49,9 +49,9 @@ set bmargin at screen 0.4
 set lmargin at screen 0.105
 set rmargin at screen 0.945
 
-plot for [j=2:2] "reps/". fitname ."/". j ."/". word(PDFs,j) .".dat" u 1:3:4 with filledcu fs transparent solid 0.5 noborder lc rgb word(colors,j) lt 3 lw 3 t "NNPDF3.1 ".word(PDFs,j),\
+plot for [j=2:2] "lhapdfGrids/". word(PDFs,j) .".dat" u 1:3:4 with filledcu fs transparent solid 0.5 noborder lc rgb word(colors,j) lt 3 lw 3 t "NNPDF3.1 ".word(PDFs,j),\
      for [j=2:2] "lhapdfGrids/". word(PDFs,j) .".dat" u 1:2 lt 8 lc rgb word(colors,j) lw 3 with lines notitle,\
-     for [j=2:2] "reps/". fitname ."/". j ."/". word(PDFs,j) .".dat" u 1:2 lt 1 lc rgb word(colors,j) lw 3 with lines notitle,\
+     for [j=2:2] "ceres/". word(PDFs,j) .".dat" u 1:2 lt 1 lc rgb word(colors,j) lw 3 with lines notitle,\
 
      
 
@@ -66,7 +66,7 @@ set lmargin at screen 0.105
 set rmargin at screen 0.945
 
 plot for [j=3:3] "<paste lhapdfGrids/". word(PDFs,j) .".dat lhapdfGrids/". word(PDFs,1) . ".dat" u 1:($2)/4+($6) lt 8 lc rgb "black" lw 3 with lines notitle,\
-     for [j=3:3] "<paste reps/". fitname ."/". j ."/". word(PDFs,j) . ".dat reps/". fitname ."/". j ."/". word(PDFs,1) . ".dat" u 1:($2)/4+($4) lt 1 lc rgb "black" lw 3 with lines notitle,\
+     for [j=3:3] "<paste ceres/". word(PDFs,j) . ".dat ceres/". word(PDFs,1) . ".dat" u 1:($2)/4+($4) lt 1 lc rgb "black" lw 3 with lines notitle,\
      
     
 unset label

@@ -232,11 +232,11 @@ int main(int argc, char *argv[])
 
     ofstream SigmaGridtxt((grids_OutputFile + "/Sigma.dat").c_str(), ios::out | ios::app);
     ofstream GluonGridtxt((grids_OutputFile + "/Gluon.dat").c_str(), ios::out | ios::app);
-    /////ofstream T8Gridtxt((grids_OutputFile + "/T8.dat").c_str(), ios::out | ios::app);
+    ofstream T8Gridtxt((grids_OutputFile + "/T8.dat").c_str(), ios::out | ios::app);
 
     SigmaGridtxt << "#x Sigma Sigma_error" << endl;
     GluonGridtxt << "#x Gluon Gluon_error" << endl;
-    /////T8Gridtxt << "#x T8 T8_error" << endl;
+    T8Gridtxt << "#x T8 T8_error" << endl;
 
     /////double Ag;
     /////bool MSR = InputCard["MSR"].as<bool>();

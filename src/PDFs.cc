@@ -57,6 +57,7 @@ std::vector<T> PDFs<T>::Evaluate(std::vector<T> const &Input) const
 template <>
 std::vector<double> PDFs<double>::Derive(std::vector<double> const &Input) const
 {
+    std::vector<double> NNderivatives1 = _nn->Derive({1, 0});
     std::vector<double> NNderivatives = _nn->Derive(Input);
 
     std::vector<double> output;
@@ -67,10 +68,10 @@ std::vector<double> PDFs<double>::Derive(std::vector<double> const &Input) const
     for (int n = 0; n < NPDF; n++)
     {
         //Singlet
-        output.push_back(NNderivatives[2 * n]); // Singlet (fl = 0)
+        output.push_back(NNderivatives[2 * n] - NNderivatives1[2 * n]); // Singlet (fl = 0)
 
         //Gluon
-        output.push_back(NNderivatives[2 * n + 1]);
+        output.push_back(NNderivatives[2 * n + 1] - NNderivatives1[2 * n + 1]);
 
         //T8
         /////output.push_back(NNderivatives[3 * n + 2] - NNderivatives1[3 * n + 2]); // T8 (fl = 5)
