@@ -1,0 +1,7 @@
+.DS_Store
+build/
+main
+main.d
+main.o
+
+*results
