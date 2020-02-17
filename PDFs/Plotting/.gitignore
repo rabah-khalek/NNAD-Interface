@@ -1,0 +1,7 @@
+figs/
+.DS_Store
+PDFgrids/
+reps
+ceres/*.dat
+lhapdfGrids/*
+Kinematics/

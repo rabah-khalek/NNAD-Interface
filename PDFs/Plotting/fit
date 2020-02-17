@@ -1,0 +1,13 @@
+rm figs/$1.pdf
+mv figs/* .temp_figs/.
+gnuplot -e "fitname='$1'" scripts/fit/ceres_reps_2fl.gp
+gnuplot -e "fitname='$1'" scripts/fit/ceres_reps.gp
+gnuplot -e "fitname='$1'" scripts/fit/relative_uncertainty_2fl.gp
+gnuplot -e "fitname='$1'" scripts/fit/ratio_reps_2fl.gp
+
+gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=merged.pdf figs/*
+rm figs/*
+mv merged.pdf figs/$1.pdf
+mv .temp_figs/* figs/.
+rm -r .temp_figs/*
+open figs/$1.pdf
