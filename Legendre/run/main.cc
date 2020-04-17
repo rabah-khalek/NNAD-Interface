@@ -251,6 +251,7 @@ int main(int argc, char *argv[])
     chi2 += pow((Predictions[id][0] - get<1>(Data[id])) / get<2>(Data[id]), 2);
     test << get<0>(Data[id]) << " " << Predictions[id][0] << " " << get<1>(Data[id]) << " " << truth[id] << " " << get<2>(Data[id]) << endl;
   }
+
   chi2 /= n;
   cout << "Final chi2 = " << chi2 << endl;
   cout << "Number of parameters = "<< np <<endl;
