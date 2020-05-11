@@ -18,13 +18,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include relevant packages
 find_package(PkgConfig REQUIRED)
-#find_package(Threads)
 pkg_search_module(YAML REQUIRED yaml-cpp)
 pkg_search_module(EIGEN3 REQUIRED eigen3)
-#pkg_search_module(CERES REQUIRED ceres-solver)
 find_package(Ceres REQUIRED)
-pkg_search_module(GLOG REQUIRED libglog)
-pkg_search_module(GFLAGS REQUIRED gflags)
+find_package(GLOG REQUIRED)
+find_package(GFLAGS REQUIRED)
 find_program(NNAD_CONFIG nnad-config REQUIRED)
 if (NNAD_CONFIG)
   exec_program(${NNAD_CONFIG}
