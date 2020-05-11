@@ -1,4 +1,4 @@
-MainDir: /Users/rabah/Documents/NNAD-Interface
+MainDir: <your-path>/NNAD-Interface/PDFs
 Seed: -1
 NNarchitecture: [2,10,3]
 Derivatives: Analytic #Analytic #Automatic #Numeric 
