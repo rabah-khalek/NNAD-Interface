@@ -48,7 +48,7 @@ std::vector<T> PDFs<T>::Evaluate(std::vector<T> const &Input) const
 {
     std::vector<T> vpdfs1 = _nn->Evaluate({T{1}, T{0}});
     std::vector<T> vpdfs = _nn->Evaluate(Input);
-    for(int i=0;i<vpdfs1.size();i++)
+    for(int i=0;i<(int)vpdfs1.size();i++)
         vpdfs.at(i)-=vpdfs1.at(i);
 
     return vpdfs;

@@ -38,7 +38,7 @@ bool AutoDiffCostFunction::operator()(T const *const *parameters, T *residuals) 
 
     // Set parameters of the NN
 
-    for (int id = 0; id < _Data.size(); id++)
+    for (int id = 0; id < (int) _Data.size(); id++)
     {
         std::vector<T> input;
         T x = T(std::get<0>(_Data[id]));

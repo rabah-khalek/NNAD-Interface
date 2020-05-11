@@ -262,13 +262,13 @@ int main(int argc, char *argv[])
 
   //! testing
   std::vector<double> hidden;
-  for (int i = 1; i < InputCard["NNarchitecture"].as<vector<double>>().size()-1;i++)
+  for (int i = 1; i < (int) InputCard["NNarchitecture"].as<vector<double>>().size()-1;i++)
   {
     hidden.push_back(InputCard["NNarchitecture"].as<vector<double>>()[i]);
   }
   bool exist = false;
   string output_name = "output/" + DerivativesChoice+"/" + to_string(np)+"_";
-  for (int i = 0; i < hidden.size(); i++)
+  for (int i = 0; i < (int) hidden.size(); i++)
     output_name += "_"+to_string(int(hidden.at(i)));
   output_name += ".dat";
   ifstream f(output_name.c_str());
@@ -280,12 +280,12 @@ int main(int argc, char *argv[])
   if(!exist)
   {
   out << "Seed "<<" "<<"np"<<" ";
-  for (int i=0;i<hidden.size();i++)
+  for (int i=0;i<(int)hidden.size();i++)
     out << "arch"+to_string(i+1)<< " ";
   out << "chi2/dat duration" << endl;
   }
   out << Seed <<" "<<np<<" ";
-  for (int i=0;i<hidden.size();i++)
+  for (int i=0;i<(int)hidden.size();i++)
     out << hidden[i] << " ";
   out << chi2 << " " << duration << endl;
 

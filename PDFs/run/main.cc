@@ -238,26 +238,25 @@ int main(int argc, char *argv[])
   if (!(f_grids.good()))
     system(("mkdir " + grids_OutputFile).c_str());
 
+  double xx = log(xmin_grid);
 
-    double xx = log(xmin_grid);
+  ofstream SigmaGridtxt((grids_OutputFile + "/Sigma.dat").c_str(), ios::out | ios::app);
+  ofstream GluonGridtxt((grids_OutputFile + "/Gluon.dat").c_str(), ios::out | ios::app);
+  ofstream T8Gridtxt((grids_OutputFile + "/T8.dat").c_str(), ios::out | ios::app);
 
-    ofstream SigmaGridtxt((grids_OutputFile + "/Sigma.dat").c_str(), ios::out | ios::app);
-    ofstream GluonGridtxt((grids_OutputFile + "/Gluon.dat").c_str(), ios::out | ios::app);
-    ofstream T8Gridtxt((grids_OutputFile + "/T8.dat").c_str(), ios::out | ios::app);
+  SigmaGridtxt << "#x Sigma Sigma_error" << endl;
+  GluonGridtxt << "#x Gluon Gluon_error" << endl;
+  T8Gridtxt << "#x T8 T8_error" << endl;
 
-    SigmaGridtxt << "#x Sigma Sigma_error" << endl;
-    GluonGridtxt << "#x Gluon Gluon_error" << endl;
-    T8Gridtxt << "#x T8 T8_error" << endl;
+  /////double Ag;
+  /////bool MSR = InputCard["MSR"].as<bool>();
+  /////double reference_MSR=compute.Getreference_MSR();
+  /////if (MSR)
+  /////  Ag = pdfs.MSR(reference_MSR);
+  /////else
+  /////  Ag = 1;
 
-    /////double Ag;
-    /////bool MSR = InputCard["MSR"].as<bool>();
-    /////double reference_MSR=compute.Getreference_MSR();
-    /////if (MSR)
-    /////  Ag = pdfs.MSR(reference_MSR);
-    /////else
-    /////  Ag = 1;
-
-    for (int xi = 0; xi < n; xi++) //[cogged]
+  for (int xi = 0; xi < n; xi++) //[cogged]
     {
       double x = exp(xx); //[cogged]
       vector<double> vpdfs = pdfs.Evaluate({x, log(x)});
@@ -279,7 +278,7 @@ int main(int argc, char *argv[])
 
     ofstream Theorytxt(theory_OutputFile +"/Theory.dat", ios::out | ios::app);
     Theorytxt << "#x cv" << endl;
-    for (int i=0; i<Data.size();i++)
+    for (int i=0; i<(int)Data.size();i++)
     {
       Theorytxt << std::get<0>(Data[i]) << " " << final_predictions[i] << endl;
     }

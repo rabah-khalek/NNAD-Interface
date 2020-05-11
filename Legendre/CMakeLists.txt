@@ -6,14 +6,14 @@ if (NOT DEFINED CMAKE_MACOSX_RPATH)
 endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-  add_compile_options(-g -std=c++17 -stdlib=libc++ -Wall -fPIC -lpthread -fopenmp) #linux
+  add_compile_options(-g -std=c++11 -Wall -fPIC -lpthread -fopenmp) #linux
 else()
-  add_compile_options(-g -std=c++17 -stdlib=libc++ -Wall -fPIC) #mac
+  add_compile_options(-g -std=c++11 -stdlib=libc++ -Wall -fPIC) #mac
 endif()
 
 
 # Activating some global properties for the project
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include relevant packages
@@ -21,7 +21,8 @@ find_package(PkgConfig REQUIRED)
 #find_package(Threads)
 pkg_search_module(YAML REQUIRED yaml-cpp)
 pkg_search_module(EIGEN3 REQUIRED eigen3)
-pkg_search_module(CERES REQUIRED ceres-solver)
+#pkg_search_module(CERES REQUIRED ceres-solver)
+find_package(Ceres REQUIRED)
 pkg_search_module(GLOG REQUIRED libglog)
 pkg_search_module(GFLAGS REQUIRED gflags)
 find_program(NNAD_CONFIG nnad-config REQUIRED)
@@ -35,7 +36,7 @@ endif(NNAD_CONFIG)
 include_directories(${PROJECT_SOURCE_DIR}/inc)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NNAD_CFLAGS} ${YAML_CFLAGS} ${EIGEN3_CFLAGS} ${CERES_CFLAGS} ${GLOG_CFLAGS} ${GFLAGS_CFLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NNAD_CFLAGS} ${YAML_CFLAGS} ${EIGEN3_CFLAGS} ${Ceres_CFLAGS} ${GLOG_CFLAGS} ${GFLAGS_CFLAGS}")
 
 add_subdirectory(src) 
 add_subdirectory(run)

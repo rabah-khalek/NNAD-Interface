@@ -97,13 +97,13 @@ class Compute
     std::vector<std::pair<double, double>> PseudoData();
 
   private:
+    int _Seed;
     std::string _InputCardName;
-    vector<NNPDF_APFELgrid::FKTable<double>> _FKs;
+    vector<NNPDF::FKTable<double>> _FKs;
     PDFs<T> _pdfs;
     int _np;
     int _nd;
     vector<string> _chosen_sets;
     std::map<T, T> _m_As;
     double _reference_MSR;
-    int _Seed;
-    };
+};

@@ -27,7 +27,7 @@ bool NumericCostFunction::operator()(double const *const *parameters, double *re
     _nn->SetParameters(pars);
     // Set parameters of the NN
 
-    for (int id = 0; id < _Data.size(); id++)
+    for (int id = 0; id < (int) _Data.size(); id++)
     {
         std::vector<double> input;
         double x = std::get<0>(_Data[id]);

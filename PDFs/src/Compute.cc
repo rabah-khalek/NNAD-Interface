@@ -18,7 +18,7 @@ Compute<T>::Compute(int const &Seed, std::string const &InputCardName) : _Seed(S
     {
         const std::string FK_path = InputCard["MainDir"].as<std::string>()+"/FK/FK_"+Dataset.as<string>()+".dat";
         
-        NNPDF_APFELgrid::FKTable<double> FK(FK_path);
+        NNPDF::FKTable<double> FK(FK_path);
 
         _FKs.push_back(FK);
         _nd +=FK.GetNData();
@@ -161,9 +161,9 @@ std::vector<std::vector<double>> Compute<double>::dDerivatives()
                 for (int fl = 0; fl < NonZero; fl++)
                     pdf[n * DSz + fl * Nx + i] = 0;
 
-                    pdf[n * DSz + i] = vpdfs[2 * n];                  // Singlet (fl = 0)
-                    pdf[n * DSz + Nx + i] =vpdfs[2 * n + 1];     // Gluon (fl = 1)
-                    /////pdf[n * DSz + 3 * Nx + i] = vpdfs[3 * n + 2]; // T8 (fl = 5)
+		pdf[n * DSz + i] = vpdfs[2 * n];                  // Singlet (fl = 0)
+		pdf[n * DSz + Nx + i] =vpdfs[2 * n + 1];     // Gluon (fl = 1)
+		/////pdf[n * DSz + 3 * Nx + i] = vpdfs[3 * n + 2]; // T8 (fl = 5)
                 
             }
         }
@@ -256,7 +256,7 @@ std::vector<std::pair<double, double>> Compute<double>::PseudoData()
     double max = InputCard["max_sigma"].as<double>();
     std::uniform_real_distribution<double> distribution(min, max);
 
-    for(int i=0;i<temp_output.size();i++)
+    for(int i=0;i<(int)temp_output.size();i++)
     {
         std::pair<double, double> entry;
         entry.first = temp_output.at(i);

@@ -30,7 +30,7 @@ bool AutoDiffCostFunction::operator()(T const *const *parameters, T *residuals) 
     //std::vector<T> v = std::get<Compute<T>>(_computers).Predictions();
     std::vector<T> v = Comp.Predictions();
 
-    for (int id = 0; id < _Data.size(); id++)
+    for (int id = 0; id < (int) _Data.size(); id++)
     {
         residuals[id] = (v[id] - std::get<0>(_Data[id])) / std::get<1>(_Data[id]);
     }
